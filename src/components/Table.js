@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { data } = useContext(MyContext);
+  const { data, searchInput, setSearchInput } = useContext(MyContext);
 
   const deleteResidents = () => {
     const newData = [];
@@ -13,8 +13,24 @@ function Table() {
     return newData;
   };
 
+  const filterSearch = () => {
+    const arrayWithoutResidents = deleteResidents();
+    return arrayWithoutResidents.filter((input) => input.name
+      .toLowerCase().includes(searchInput));
+  };
+
   return (
     <div>
+      <label htmlFor="search">
+        <input
+          id="search"
+          type="text"
+          data-testid="name-filter"
+          name="searchInput"
+          value={ searchInput }
+          onChange={ ({ target }) => setSearchInput(target.value) }
+        />
+      </label>
       <table>
         <thead>
           <tr>
@@ -34,7 +50,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {deleteResidents().map((planets, index) => (
+          {filterSearch().map((planets, index) => (
             <tr key={ index }>
               <td>{planets.climate}</td>
               <td>{planets.created}</td>

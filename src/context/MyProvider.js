@@ -5,6 +5,7 @@ import MyContext from './MyContext';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     const apiResponse = async () => {
@@ -18,10 +19,12 @@ function MyProvider({ children }) {
       }
     };
     apiResponse();
-  }, []);
+  }, [searchInput]);
 
   const context = {
     data,
+    searchInput,
+    setSearchInput,
   };
 
   return (
