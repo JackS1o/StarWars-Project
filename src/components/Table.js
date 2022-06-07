@@ -16,25 +16,42 @@ function Table() {
   return (
     <div>
       <table>
-        <tr>
-          {deleteResidents().map((planet) => (
-            <>
-              <th>{planet.climate}</th>
-              <th>{planet.created}</th>
-              <th>{planet.diameter}</th>
-              <th>{planet.edited}</th>
-              <th>{planet.films}</th>
-              <th>{planet.gravity}</th>
-              <th>{planet.name}</th>
-              <th>{planet.orbital_period}</th>
-              <th>{planet.population}</th>
-              <th>{planet.rotation_period}</th>
-              <th>{planet.surface_water}</th>
-              <th>{planet.terrain}</th>
-              <th>{planet.url}</th>
-            </>
+        <thead>
+          <tr>
+            <th>climate</th>
+            <th>created</th>
+            <th>diameter</th>
+            <th>edited</th>
+            <th>films</th>
+            <th>gravity</th>
+            <th>name</th>
+            <th>orbital_period</th>
+            <th>population</th>
+            <th>rotation_period</th>
+            <th>surface_water</th>
+            <th>terrain</th>
+            <th>url</th>
+          </tr>
+        </thead>
+        <tbody>
+          {deleteResidents().map((planets, index) => (
+            <tr key={ index }>
+              <td>{planets.climate}</td>
+              <td>{planets.created}</td>
+              <td>{planets.diameter}</td>
+              <td>{planets.edited}</td>
+              <td>{planets.films}</td>
+              <td>{planets.gravity}</td>
+              <td>{planets.name}</td>
+              <td>{planets.orbital_period}</td>
+              <td>{planets.population}</td>
+              <td>{planets.rotation_period}</td>
+              <td>{planets.surface_water}</td>
+              <td>{planets.terrain}</td>
+              <td>{planets.url}</td>
+            </tr>
           ))}
-        </tr>
+        </tbody>
       </table>
     </div>
   );
