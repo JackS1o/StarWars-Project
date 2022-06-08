@@ -7,6 +7,7 @@ function MyProvider({ children }) {
   const [data, setData] = useState([]);
   const [filtredList, setFiltredList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  const [selectOptions, setSelectOptions] = useState([]);
   const [selectChange, setSelectChange] = useState({
     column: 'population',
     operator: 'maior que',
@@ -42,6 +43,9 @@ function MyProvider({ children }) {
   };
 
   useEffect(() => {
+    const options = ['population', 'orbital_period',
+      'diameter', 'rotation_period', 'surface_water'];
+    setSelectOptions(options);
     const filtredArray = data.filter((input) => input.name
       .toLowerCase().includes(searchInput));
     setFiltredList(filtredArray);
@@ -53,6 +57,8 @@ function MyProvider({ children }) {
 
   const filterBtn = () => {
     const { column, operator, num } = selectChange;
+    const optFilter = selectOptions.filter((op) => op !== column);
+    setSelectOptions(optFilter);
     const filteredByClick = filtredList.filter((planet) => {
       if (operator === 'maior que') {
         return planet[column] > Number(num);
@@ -75,6 +81,7 @@ function MyProvider({ children }) {
     filterSearch,
     setFiltredList,
     filterBtn,
+    selectOptions,
   };
 
   return (

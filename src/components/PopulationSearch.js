@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-// import PropTypes from 'prop-types';
 import MyContext from '../context/MyContext';
 
 function PopulationSearch() {
-  const { selectChange, selectInput, filterBtn } = useContext(MyContext);
+  const { selectChange, selectInput, filterBtn, selectOptions } = useContext(MyContext);
   const { column, operator, num } = selectChange;
 
   return (
@@ -16,11 +15,13 @@ function PopulationSearch() {
           value={ column }
           onChange={ selectInput }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {selectOptions.map((op) => (
+            <option
+              key={ op }
+            >
+              {op}
+            </option>
+          ))}
         </select>
       </label>
       <label htmlFor="size">
@@ -56,9 +57,5 @@ function PopulationSearch() {
     </div>
   );
 }
-
-// PopulationSearch.propTypes = {
-//   filterBtn: PropTypes.func.isRequired,
-// };
 
 export default PopulationSearch;
