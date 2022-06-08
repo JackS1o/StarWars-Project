@@ -53,7 +53,7 @@ function MyProvider({ children }) {
 
   const filterBtn = () => {
     const { column, operator, num } = selectChange;
-    const filteredByClick = data.filter((planet) => {
+    const filteredByClick = filtredList.filter((planet) => {
       if (operator === 'maior que') {
         return planet[column] > Number(num);
       }
