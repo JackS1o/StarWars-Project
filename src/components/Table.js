@@ -1,26 +1,13 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
+import PopulationSearch from './PopulationSearch';
 
 function Table() {
-  const { data, searchInput, setSearchInput } = useContext(MyContext);
-
-  const deleteResidents = () => {
-    const newData = [];
-    data.forEach((planets) => {
-      delete planets.residents;
-      newData.push(planets);
-    });
-    return newData;
-  };
-
-  const filterSearch = () => {
-    const arrayWithoutResidents = deleteResidents();
-    return arrayWithoutResidents.filter((input) => input.name
-      .toLowerCase().includes(searchInput));
-  };
+  const { searchInput, filterSearch, filtredList } = useContext(MyContext);
 
   return (
     <div>
+      <PopulationSearch />
       <label htmlFor="search">
         <input
           id="search"
@@ -28,7 +15,7 @@ function Table() {
           data-testid="name-filter"
           name="searchInput"
           value={ searchInput }
-          onChange={ ({ target }) => setSearchInput(target.value) }
+          onChange={ filterSearch }
         />
       </label>
       <table>
@@ -50,7 +37,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterSearch().map((planets, index) => (
+          {filtredList.map((planets, index) => (
             <tr key={ index }>
               <td>{planets.climate}</td>
               <td>{planets.created}</td>

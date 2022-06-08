@@ -39,7 +39,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
+describe.only('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
 
   it('Realize uma requisição para a API', async () => {
     await act(async () => {
@@ -169,7 +169,7 @@ describe.only('2 - Filtre a tabela através de um texto, inserido num *campo de 
   });
 });
 
-describe('3 - Crie um filtro para valores numéricos', () => {
+describe.only('3 - Crie um filtro para valores numéricos', () => {
 
   it('Renderize o filtro de coluna', async () => {
     await act(async () => {
