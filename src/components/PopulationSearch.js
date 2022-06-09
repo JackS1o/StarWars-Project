@@ -15,9 +15,9 @@ function PopulationSearch() {
           value={ column }
           onChange={ selectInput }
         >
-          {selectOptions.map((op) => (
+          {selectOptions.map((op, index) => (
             <option
-              key={ op }
+              key={ index }
             >
               {op}
             </option>

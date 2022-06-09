@@ -3,11 +3,11 @@ import MyContext from '../context/MyContext';
 import PopulationSearch from './PopulationSearch';
 
 function Table() {
-  const { searchInput, filterSearch, filtredList } = useContext(MyContext);
+  const { searchInput, filterSearch,
+    filtredList, optionsList, removeBtn, removeAllFilters } = useContext(MyContext);
 
   return (
     <div>
-      <PopulationSearch />
       <label htmlFor="search">
         <input
           id="search"
@@ -18,6 +18,32 @@ function Table() {
           onChange={ filterSearch }
         />
       </label>
+      <PopulationSearch />
+      <div data-testid="filter">
+        {optionsList.map((opt, index) => (
+          <p key={ index }>
+            {opt.column}
+            {' '}
+            {opt.operator}
+            {' '}
+            {opt.num}
+            {' '}
+            <button
+              onClick={ () => removeBtn(opt) }
+              type="button"
+            >
+              X
+            </button>
+          </p>
+        ))}
+        <button
+          data-testid="button-remove-filters"
+          onClick={ removeAllFilters }
+          type="button"
+        >
+          Remover todas filtragens
+        </button>
+      </div>
       <table>
         <thead>
           <tr>

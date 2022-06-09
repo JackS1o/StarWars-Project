@@ -8,6 +8,7 @@ function MyProvider({ children }) {
   const [filtredList, setFiltredList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [selectOptions, setSelectOptions] = useState([]);
+  const [optionsList, setOptionsList] = useState([]);
   const [selectChange, setSelectChange] = useState({
     column: 'population',
     operator: 'maior que',
@@ -48,17 +49,48 @@ function MyProvider({ children }) {
     setSelectOptions(options);
     const filtredArray = data.filter((input) => input.name
       .toLowerCase().includes(searchInput));
-    setFiltredList(filtredArray);
-  }, [data, searchInput]);
+
+    const updateTable = optionsList.reduce((acc, fil) => acc.filter((planet) => {
+      switch (fil.operator) {
+      case 'maior que':
+        return Number(planet[fil.column]) > Number(fil.num);
+      case 'menor que':
+        return Number(planet[fil.column]) < Number(fil.num);
+      case 'igual a':
+        return Number(planet[fil.column]) === Number(fil.num);
+      default:
+        return true;
+      }
+    }), filtredArray);
+    setFiltredList(updateTable);
+  }, [data, searchInput, optionsList]);
 
   const filterSearch = ({ target }) => {
     setSearchInput(target.value);
+  };
+
+  const removeBtn = (opt) => {
+    const removeOpt = optionsList.filter((el) => el !== opt);
+    setOptionsList(removeOpt);
+    setSelectOptions([...selectOptions, opt.column]);
+  };
+
+  const removeAllFilters = () => {
+    const options = ['population', 'orbital_period',
+      'diameter', 'rotation_period', 'surface_water'];
+    setOptionsList([]);
+    setSelectOptions(options);
   };
 
   const filterBtn = () => {
     const { column, operator, num } = selectChange;
     const optFilter = selectOptions.filter((op) => op !== column);
     setSelectOptions(optFilter);
+    setSelectChange({
+      column: optFilter[0],
+      operator: 'maior que',
+      num: 0,
+    });
     const filteredByClick = filtredList.filter((planet) => {
       if (operator === 'maior que') {
         return planet[column] > Number(num);
@@ -69,6 +101,7 @@ function MyProvider({ children }) {
       return Number(planet[column] === num);
     });
     setFiltredList(filteredByClick);
+    setOptionsList([...optionsList, selectChange]);
   };
 
   const context = {
@@ -82,6 +115,9 @@ function MyProvider({ children }) {
     setFiltredList,
     filterBtn,
     selectOptions,
+    optionsList,
+    removeBtn,
+    removeAllFilters,
   };
 
   return (

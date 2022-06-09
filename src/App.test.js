@@ -39,7 +39,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe.only('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
+describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
 
   it('Realize uma requisição para a API', async () => {
     await act(async () => {
@@ -93,7 +93,7 @@ describe.only('1 - Faça uma requisição para o endpoint `/planets` da API de S
   });
 });
 
-describe.only('2 - Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
+describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
 
   const ROWS_WITH_LETTER_O = 8;
   const ROWS_WITH_LETTERS_OO = 3;
@@ -169,7 +169,7 @@ describe.only('2 - Filtre a tabela através de um texto, inserido num *campo de 
   });
 });
 
-describe.only('3 - Crie um filtro para valores numéricos', () => {
+describe('3 - Crie um filtro para valores numéricos', () => {
 
   it('Renderize o filtro de coluna', async () => {
     await act(async () => {
@@ -294,7 +294,7 @@ describe.only('3 - Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe.only('4 - Implemente múltiplos filtros numéricos', () => {
+describe('4 - Implemente múltiplos filtros numéricos', () => {
   it('Adicione dois filtros e verifique se a tabela foi atualizada com as informações filtradas', async () => {
     await act(async () => {
       render(<App />);
@@ -340,7 +340,7 @@ describe.only('4 - Implemente múltiplos filtros numéricos', () => {
   });
 });
 
-describe.only('5 - Não utilize filtros repetidos', () => {
+describe('5 - Não utilize filtros repetidos', () => {
 
   it('Filtre por população e o remove das opções', async () => {
     await act(async () => {
@@ -377,7 +377,7 @@ describe.only('5 - Não utilize filtros repetidos', () => {
   });
 });
 
-describe('6 - Apague um filtro de valor numérico ao clicar no ícone de X de um dos filtros e apague todas filtragens numéricas simultaneamente ao clicar em outro botão de Remover todas filtragens', () => {
+describe.only('6 - Apague um filtro de valor numérico ao clicar no ícone de X de um dos filtros e apague todas filtragens numéricas simultaneamente ao clicar em outro botão de Remover todas filtragens', () => {
 
   const removeFilter = async (index = 0) => {
     const filters = await screen.findAllByTestId(REMOVE_FILTER_SELECTOR);
