@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 
 import MyContext from './MyContext';
 
+const options = ['population', 'orbital_period',
+  'diameter', 'rotation_period', 'surface_water'];
+
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
   const [filtredList, setFiltredList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  const [selectOptions, setSelectOptions] = useState([]);
+  const [selectOptions, setSelectOptions] = useState(options);
   const [optionsList, setOptionsList] = useState([]);
   const [selectChange, setSelectChange] = useState({
     column: 'population',
@@ -44,9 +47,6 @@ function MyProvider({ children }) {
   };
 
   useEffect(() => {
-    const options = ['population', 'orbital_period',
-      'diameter', 'rotation_period', 'surface_water'];
-    setSelectOptions(options);
     const filtredArray = data.filter((input) => input.name
       .toLowerCase().includes(searchInput));
 
@@ -76,8 +76,6 @@ function MyProvider({ children }) {
   };
 
   const removeAllFilters = () => {
-    const options = ['population', 'orbital_period',
-      'diameter', 'rotation_period', 'surface_water'];
     setOptionsList([]);
     setSelectOptions(options);
   };
