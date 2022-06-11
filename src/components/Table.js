@@ -19,9 +19,12 @@ function Table() {
         />
       </label>
       <PopulationSearch />
-      <div data-testid="filter">
+      <div>
         {optionsList.map((opt, index) => (
-          <p key={ index }>
+          <p
+            data-testid="filter"
+            key={ index }
+          >
             {opt.column}
             {' '}
             {opt.operator}
