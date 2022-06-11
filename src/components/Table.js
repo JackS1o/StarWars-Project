@@ -25,7 +25,7 @@ function Table() {
             data-testid="filter"
             key={ index }
           >
-            {opt.column}
+            {opt.col}
             {' '}
             {opt.operator}
             {' '}
@@ -74,7 +74,7 @@ function Table() {
               <td>{planets.edited}</td>
               <td>{planets.films}</td>
               <td>{planets.gravity}</td>
-              <td>{planets.name}</td>
+              <td data-testid="planet-name">{planets.name}</td>
               <td>{planets.orbital_period}</td>
               <td>{planets.population}</td>
               <td>{planets.rotation_period}</td>

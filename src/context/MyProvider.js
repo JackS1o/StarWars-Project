@@ -13,9 +13,13 @@ function MyProvider({ children }) {
   const [selectOptions, setSelectOptions] = useState(options);
   const [optionsList, setOptionsList] = useState([]);
   const [selectChange, setSelectChange] = useState({
-    column: 'population',
+    col: 'population',
     operator: 'maior que',
     num: 0,
+  });
+  const [orderTable, setOrderTable] = useState({
+    column: 'population',
+    sort: 'ASC',
   });
 
   useEffect(() => {
@@ -27,7 +31,7 @@ function MyProvider({ children }) {
         const filtredResults = results.map((item) => {
           delete item.residents;
           return item;
-        });
+        }).sort((a, b) => a.name.localeCompare(b.name));
         setData(filtredResults);
         setFiltredList(filtredResults);
       } catch (error) {
@@ -46,6 +50,31 @@ function MyProvider({ children }) {
     });
   };
 
+  const orderFilter = ({ target }) => {
+    const { name, value } = target;
+    setOrderTable({
+      ...orderTable,
+      [name]: value,
+    });
+  };
+
+  const orderBtn = () => {
+    const { column, sort } = orderTable;
+    setOrderTable({
+      column,
+      sort,
+    });
+  };
+
+  useEffect(() => {
+    const { column } = orderTable;
+    if (orderTable.sort === 'ASC') {
+      const orderTableFilter = filtredList.sort((a, b) => a[column] - b[column]);
+      return setFiltredList(orderTableFilter);
+    }
+    return setFiltredList(filtredList.sort((a, b) => b[column] - a[column]));
+  }, [filtredList, orderTable]);
+
   useEffect(() => {
     const filtredArray = data.filter((input) => input.name
       .toLowerCase().includes(searchInput));
@@ -53,11 +82,11 @@ function MyProvider({ children }) {
     const updateTable = optionsList.reduce((acc, fil) => acc.filter((planet) => {
       switch (fil.operator) {
       case 'maior que':
-        return Number(planet[fil.column]) > Number(fil.num);
+        return Number(planet[fil.col]) > Number(fil.num);
       case 'menor que':
-        return Number(planet[fil.column]) < Number(fil.num);
+        return Number(planet[fil.col]) < Number(fil.num);
       case 'igual a':
-        return Number(planet[fil.column]) === Number(fil.num);
+        return Number(planet[fil.col]) === Number(fil.num);
       default:
         return true;
       }
@@ -72,7 +101,7 @@ function MyProvider({ children }) {
   const removeBtn = (opt) => {
     const removeOpt = optionsList.filter((el) => el !== opt);
     setOptionsList(removeOpt);
-    setSelectOptions([...selectOptions, opt.column]);
+    setSelectOptions([...selectOptions, opt.col]);
   };
 
   const removeAllFilters = () => {
@@ -81,22 +110,22 @@ function MyProvider({ children }) {
   };
 
   const filterBtn = () => {
-    const { column, operator, num } = selectChange;
-    const optFilter = selectOptions.filter((op) => op !== column);
+    const { col, operator, num } = selectChange;
+    const optFilter = selectOptions.filter((op) => op !== col);
     setSelectOptions(optFilter);
     setSelectChange({
-      column: optFilter[0],
+      col: optFilter[0],
       operator: 'maior que',
       num: 0,
     });
     const filteredByClick = filtredList.filter((planet) => {
       if (operator === 'maior que') {
-        return planet[column] > Number(num);
+        return planet[col] > Number(num);
       }
       if (operator === 'menor que') {
-        return planet[column] < Number(num);
+        return planet[col] < Number(num);
       }
-      return Number(planet[column] === num);
+      return Number(planet[col] === num);
     });
     setFiltredList(filteredByClick);
     setOptionsList([...optionsList, selectChange]);
@@ -116,6 +145,9 @@ function MyProvider({ children }) {
     optionsList,
     removeBtn,
     removeAllFilters,
+    orderFilter,
+    orderTable,
+    orderBtn,
   };
 
   return (
